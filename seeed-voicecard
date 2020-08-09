@@ -150,5 +150,6 @@ fi
 alsactl restore
 
 #Force 3.5mm ('headphone') jack
-amixer -c 1 cset numid=3 1 
-
+if aplay -l | grep -q "bcm2835 ALSA"; then
+    amixer cset numid=3 1 || true
+fi
