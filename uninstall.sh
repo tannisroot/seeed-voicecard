@@ -62,8 +62,11 @@ echo "remove dtbos"
 for i in $RPI_HATS; do
     dtoverlay -r $i
 done
+
+# Try Raspbian, Ubuntu, then LibreELEC location for OVERLAYS:
 OVERLAYS=/boot/overlays
 [ -d /boot/firmware/overlays ] && OVERLAYS=/boot/firmware/overlays
+[ -d /flash/overlays ] && OVERLAYS=/flash/overlays
 
 rm  ${OVERLAYS}/seeed-2mic-voicecard.dtbo || true
 rm  ${OVERLAYS}/seeed-4mic-voicecard.dtbo || true

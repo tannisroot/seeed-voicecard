@@ -31,8 +31,11 @@ fi
 # - check for /boot/overlays
 # - dtparam and dtoverlay is available
 errorFound=0
+
+# Try Raspbian, Ubuntu, then LibreELEC location for OVERLAYS:
 OVERLAYS=/boot/overlays
 [ -d /boot/firmware/overlays ] && OVERLAYS=/boot/firmware/overlays
+[ -d /flash/overlays ] && OVERLAYS=/flash/overlays
 
 if [ ! -d $OVERLAYS ] ; then
   echo "$OVERLAYS not found or not a directory" 1>&2
