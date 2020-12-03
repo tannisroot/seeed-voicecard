@@ -175,9 +175,12 @@ grep -q "^snd-soc-ac108$" /etc/modules || \
 grep -q "^snd-soc-wm8960$" /etc/modules || \
   echo "snd-soc-wm8960" >> /etc/modules  
 
-#set dtoverlays
+#set dtoverlays - Raspbian:
 CONFIG=/boot/config.txt
+# Ubuntu:
 [ -f /boot/firmware/usercfg.txt ] && CONFIG=/boot/firmware/usercfg.txt
+# LibreELEC:
+[ -f /flash/distroconfig.txt ] && CONFIG=/flash/distroconfig.txt
 
 sed -i -e 's:#dtparam=i2c_arm=on:dtparam=i2c_arm=on:g'  $CONFIG || true
 grep -q "^dtoverlay=i2s-mmap$" $CONFIG || \

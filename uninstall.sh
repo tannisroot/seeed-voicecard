@@ -13,8 +13,12 @@ fi
 
 uname_r=$(uname -r)
 
+# Raspbian:
 CONFIG=/boot/config.txt
+# Ubuntu:
 [ -f /boot/firmware/usercfg.txt ] && CONFIG=/boot/firmware/usercfg.txt
+# LibreELEC:
+[ -f /flash/distroconfig.txt ] && CONFIG=/flash/distroconfig.txt
 
 get_overlay() {
     ov=$1
