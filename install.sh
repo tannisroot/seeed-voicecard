@@ -129,6 +129,12 @@ base_ver=$(get_kernel_version)
 base_ver=${base_ver%%[-+]*}
 #kernels="${base_ver}+ ${base_ver}-v7+ ${base_ver}-v7l+"
 kernels=$(uname -r)
+threads="$(getconf _NPROCESSORS_ONLN)"
+memory="$(LANG=C free -m|awk '/^Mem:/{print $2}')"
+
+if  [ "${memory}" -le 512 ] && [ "${threads}" -gt 2 ]; then
+threads=2
+fi
 
 function install_module {
   local _i
@@ -150,7 +156,7 @@ function install_module {
 
   dkms add -m $mod -v $ver
   for _i in $kernels; do
-    dkms build -k $_i -m $mod -v $ver && {
+    dkms build -k $_i -m $mod -v $ver -j "${threads}" && {
       dkms install --force -k $_i -m $mod -v $ver
     }
   done
